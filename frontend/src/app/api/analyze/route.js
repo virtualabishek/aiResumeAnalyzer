@@ -1,7 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import "dotenv/config";
 
-const apiKey = "AIzaSyDOoHYoBydAryNoSDvKol9N8llF-d_7zrs";
+const apiKey = process.env.GEMINI_API_KEY;
 
 async function extractCvData(cvText) {
   const genAI = new GoogleGenerativeAI(apiKey);

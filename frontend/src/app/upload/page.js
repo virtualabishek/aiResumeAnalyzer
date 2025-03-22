@@ -3,15 +3,12 @@ import { useState } from "react";
 import { Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { setPdfWorker } from "@/utils/pdfworker";
 
-// PDF parsing function
 const extractTextFromPDF = async (file) => {
   try {
-    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf");
-    const pdfjsWorker = await import(
-      "pdfjs-dist/legacy/build/pdf.worker.entry"
-    );
-    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+    const pdfjsLib = await import("pdfjs-dist");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
